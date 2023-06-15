@@ -1,6 +1,4 @@
 import { AbstractEntity } from "./AbstractEntity";
-import { CondutorModel } from "./CondutorModel";
-import {VeiculoModel} from "./VeiculoModel"
 
 export class ConfiguracaoModel extends AbstractEntity{
    valorHora!: number
