@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { MovimentacaoModel } from "../model/MovimentacaoModel";
+
+
 export class MovimentacaoClient {
 
     private axiosClient: AxiosInstance;
