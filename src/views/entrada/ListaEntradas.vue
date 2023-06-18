@@ -6,7 +6,7 @@
         <th scope="col" class="text-center align-middle">Placa</th>
         <th scope="col" class="text-center align-middle">Condutor</th>
         <th scope="col" class="text-center align-middle">Hora de Entrada</th>
-        <th scope="col" class="text-center align-middle"></th>
+        <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom">Cadastrar</button></th>
       </tr>
     </thead>
     <tbody>

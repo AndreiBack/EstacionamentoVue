@@ -27,7 +27,22 @@ component: () => import(/* webpackChunkName: "about" */ '../views/entrada/ListaE
   path: '/MarcaLista',
   name: 'MarcaLista',
   component: () => import(/* webpackChunkName: "about" */ '../views/marca/ListaMarcas.vue')
-  }
+  },
+  {
+    path: '/ModeloLista',
+    name: 'ModeloLista',
+    component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ListaModelos.vue')
+    },
+    {
+      path: '/VeiculoLista',
+      name: 'VeiculoLista',
+      component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/ListaVeiculos.vue')
+      },
+     {
+       path: '/CondutorLista',
+       name: 'CondutorLista',
+       component: () => import(/* webpackChunkName: "about" */ '../views/condutor/ListaCondutores.vue')
+      }
 ]
 
 const router = createRouter({

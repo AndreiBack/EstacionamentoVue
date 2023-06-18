@@ -9,7 +9,7 @@
          <router-link to="/MarcaLista" class="nav-link">Marcas</router-link>
          <router-link to="/ModeloLista" class="nav-link">Modelos</router-link>
          <router-link to="/VeiculoLista" class="nav-link">Veiculos</router-link>
-         <router-link to="/" class="nav-link">Condutores</router-link>
+         <router-link to="/CondutorLista" class="nav-link">Condutores</router-link>
        </div> 
        <div class="navbar-icons">
            <img src="./assets/Config.png" alt="Configurações" class="config"/>
