@@ -42,7 +42,32 @@ component: () => import(/* webpackChunkName: "about" */ '../views/entrada/ListaE
        path: '/CondutorLista',
        name: 'CondutorLista',
        component: () => import(/* webpackChunkName: "about" */ '../views/condutor/ListaCondutores.vue')
-      }
+      },
+      {
+        path: '/CondutorCadastro',
+        name: 'CondutorCadastro',
+        component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CadastroCondutores.vue')
+       },
+       {
+         path: '/EntradaCadastro',
+         name: 'EntradaCadastro',
+         component: () => import(/* webpackChunkName: "about" */ '../views/entrada/CadastroEntradas.vue')
+        },
+        {
+          path: '/MarcaCadastro',
+          name: 'MarcaCadastro',
+          component: () => import(/* webpackChunkName: "about" */ '../views/marca/CadastroMarcas.vue')
+         },
+         {
+           path: '/ModeloCadastro',
+           name: 'ModeloCadastro',
+           component: () => import(/* webpackChunkName: "about" */ '../views/modelo/CadastroModelos.vue')
+          },
+          {
+            path: '/VeiculoCadastro',
+            name: 'VeiculoCadastro',
+            component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/CadastroVeiculos.vue')
+           }
 ]
 
 const router = createRouter({

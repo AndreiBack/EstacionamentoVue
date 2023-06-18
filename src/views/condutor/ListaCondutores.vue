@@ -6,7 +6,7 @@
           <th scope="col" class="text-center align-middle">Cpf</th>
           <th scope="col" class="text-center align-middle">Telefone</th>
           <th scope="col" class="text-center align-middle"></th>
-          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom">Cadastrar</button></th>
+          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom">   <router-link to="/CondutorCadastro" class="nav-link">Cadastrar</router-link></button></th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +30,7 @@
           <td class="text-center align-middle">587.753.180-83</td>
           <td class="text-center align-middle">(67) 2838-6831</td>
           <td class="text-center align-middle"><button type="button" class="btn btn-custom">Finalizar</button></td>
+          <router-view/>
         </tr>
       </tbody>
     </table>

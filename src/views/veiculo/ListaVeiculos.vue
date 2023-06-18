@@ -6,7 +6,7 @@
           <th scope="col" class="text-center align-middle">Modelo</th>
           <th scope="col" class="text-center align-middle">Ano</th>
           <th scope="col" class="text-center align-middle">Placa</th>
-          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom">Cadastrar</button></th>
+          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom"><router-link to="/VeiculoCadastro" class="nav-link">Cadastrar</router-link> </button></th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +30,7 @@
           <td class="text-center align-middle">2010</td>
           <td class="text-center align-middle">IUE1R89</td>
           <td class="text-center align-middle"><button type="button" class="btn btn-custom">Opções</button></td>
+          
         </tr>
       </tbody>
     </table>

@@ -6,7 +6,7 @@
           <th scope="col" class="text-center align-middle">Marca</th>
           <th scope="col" class="text-center align-middle">Modelo</th>
           <th scope="col" class="text-center align-middle"></th>
-          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom">Cadastrar</button></th>
+          <th scope="col" class="text-center align-middle"><button type="button" class="btn btn-custom"> <router-link to="/ModeloCadastro" class="nav-link">Cadastrar</router-link></button></th>
         </tr>
       </thead>
       <tbody>
