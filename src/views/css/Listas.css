@@ -1,0 +1,30 @@
+.btn-custom {
+    background-color: #5B1758;
+    color: white;
+  }
+  .btn-custom:hover {
+    background-color: #863484;
+  }
+  
+  body {
+    
+    background-color: black;
+    color: white;
+    font-family: 'Poppins';
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .align-middle {
+    vertical-align: middle;
+  }
+  .table-dark {
+    border-color: #400F3B;
+  }
+  
+  .table-dark th,
+  .table-dark td {
+    border-color: #400F3B;
+  }

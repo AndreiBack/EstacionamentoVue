@@ -5,20 +5,21 @@
          <img src="./assets/LogoBraba.png" alt="Logo" class="logobraba ml-0"/>
        </div>
        <div class="navbar-links ms-auto">
-         <router-link to="/home" class="nav-link">Entradas</router-link>
-         <router-link to="/about" class="nav-link">Marcas</router-link>
-         <router-link to="/listar-marca" class="nav-link">Modelos</router-link>
-         <router-link to="/header" class="nav-link">Veiculos</router-link>
+         <router-link to="/EntradaLista" class="nav-link">Entradas</router-link>
+         <router-link to="/MarcaLista" class="nav-link">Marcas</router-link>
+         <router-link to="/ModeloLista" class="nav-link">Modelos</router-link>
+         <router-link to="/VeiculoLista" class="nav-link">Veiculos</router-link>
          <router-link to="/" class="nav-link">Condutores</router-link>
-       </div>
+       </div> 
        <div class="navbar-icons">
            <img src="./assets/Config.png" alt="Configurações" class="config"/>
        </div>
      </div>
    </nav>
+   <router-view/>
 </template>
 
-<style lang="scss">
+<style lang="scss" >
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .navbar {
@@ -42,6 +43,7 @@
   margin-right: 10px;
   font-weight: bold;
   color: #24081D;
+  font-size: 20px;
 }
 
 .navbar-icons {
@@ -52,5 +54,9 @@
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+}
+body {
+  background-color: black;
+  color: white;
 }
 </style>

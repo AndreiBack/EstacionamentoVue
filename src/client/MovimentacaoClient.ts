@@ -8,7 +8,7 @@ export class MovimentacaoClient {
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'http://localhost:8080/api/movimentacoes',
+            baseURL: 'http://localhost:8080/api/movimentacao',
             headers: {'Content-type' : 'application/json'}
         });
     }

@@ -14,15 +14,20 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/listar-marca',
-    name: 'marca',
-    component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcaListaView.vue')
-  },
-  {
   path: '/Header',
   name: 'header',
   component: () => import(/* webpackChunkName: "about" */ '../views/Header.vue')
-}
+},
+{
+path: '/EntradaLista',
+name: 'EntradaLista',
+component: () => import(/* webpackChunkName: "about" */ '../views/entrada/ListaEntradas.vue')
+},
+{
+  path: '/MarcaLista',
+  name: 'MarcaLista',
+  component: () => import(/* webpackChunkName: "about" */ '../views/marca/ListaMarcas.vue')
+  }
 ]
 
 const router = createRouter({

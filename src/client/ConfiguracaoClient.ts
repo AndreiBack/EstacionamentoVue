@@ -12,14 +12,6 @@ export class ConfiguracaoClient {
         });
     }
 
-    public async findById(id: number): Promise<ConfiguracaoModel> {
-        try {
-            return (await this.axiosClient.get<ConfiguracaoModel>(`/${id}`)).data;
-        } catch (error: any) {
-            return Promise.reject(error.response);
-        }
-    }
-
     public async listar(): Promise<ConfiguracaoModel[]> {
         try {
             return (await this.axiosClient.get<ConfiguracaoModel[]>('/')).data;
@@ -44,11 +36,5 @@ export class ConfiguracaoClient {
         }
     }
 
-    public async deletar(id: number): Promise<void> {
-        try {
-            return (await this.axiosClient.delete(`/${id}`)).data;
-        } catch (error: any) {
-            return Promise.reject(error.response);
-        }
-    }
+
 }
