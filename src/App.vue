@@ -12,7 +12,7 @@
          <router-link to="/CondutorLista" class="nav-link">Condutores</router-link>
        </div> 
        <div class="navbar-icons">
-           <img src="./assets/Config.png" alt="Configurações" class="config"/>
+        <router-link to="/Configuracao" class="nav-link"><img src="./assets/Config.png" alt="Configurações" class="config"/></router-link>
        </div>
      </div>
    </nav>

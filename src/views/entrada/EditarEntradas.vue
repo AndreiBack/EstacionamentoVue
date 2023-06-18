@@ -28,14 +28,16 @@
         <div class="row justify-content-center">
           <div class="col-md-6">
             <div class="form-group">
-                <label for="item3">Hora de Entrada:</label>
-                 <input type="text" class="form-control custom-input" id="item3" v-model="item3" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="HH:MM" required>
-                 <small class="form-text text-muted">Formato: HH:MM</small>
+              <label for="item3">Hora de Entrada:</label>
+              <input type="text" class="form-control custom-input" id="item3" v-model="item3" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" :placeholder="item3Placeholder" required>
+              <small class="form-text text-muted">Formato: HH:MM</small>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-               
+              <!-- Campo adicional para exemplo -->
+              <label for="item4">Outro campo:</label>
+              <input type="text" class="form-control custom-input" id="item4" v-model="item4" :placeholder="item4Placeholder">
             </div>
           </div>
         </div>
@@ -49,8 +51,8 @@
   </template>
   
   <style scoped>
-    @import '../css/Listas.css';
-
+  @import '../css/Listas.css';
+  
   .container {
     margin-top: 20px;
   }
@@ -68,10 +70,19 @@
   export default {
     data() {
       return {
-        item1: '',
-        item2: '',
-        item3: '',
+        item1: 'carro',
+        item2: 'Ben',
+        item3: '10:30',
+        item4: 'Valor exemplo',
       };
+    },
+    computed: {
+      item3Placeholder() {
+        return this.item3 !== '' ? this.item3 : 'HH:MM';
+      },
+      item4Placeholder() {
+        return this.item4 !== '' ? this.item4 : '';
+      },
     },
   };
   </script>

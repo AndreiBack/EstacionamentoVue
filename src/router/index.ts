@@ -67,7 +67,12 @@ component: () => import(/* webpackChunkName: "about" */ '../views/entrada/ListaE
             path: '/VeiculoCadastro',
             name: 'VeiculoCadastro',
             component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/CadastroVeiculos.vue')
-           }
+           },
+           {
+             path: '/Configuracao',
+             name: 'Configuracao',
+             component: () => import(/* webpackChunkName: "about" */ '../views/configuração/Configuração.vue')
+            }
 ]
 
 const router = createRouter({

@@ -45,7 +45,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-3 mt-4"> <!-- Adicione a classe "mt-4" para adicionar margem inferior -->
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-custom">Cadastrar</button>
           </div>
         </div>
       </form>
@@ -53,6 +53,8 @@
   </template>
   
   <style scoped>
+    @import '../css/Listas.css';
+
   .container {
     margin-top: 20px;
   }

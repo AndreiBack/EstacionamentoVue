@@ -22,7 +22,7 @@
           </div>
         <div class="row justify-content-center">
           <div class="col-md-5 mt-4">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-custom">Cadastrar</button>
         </div> 
     </div>
           </div>
@@ -32,6 +32,8 @@
   </template>
   
   <style scoped>
+    @import '../css/Listas.css';
+
   .container {
     margin-top: 20px;
   }
