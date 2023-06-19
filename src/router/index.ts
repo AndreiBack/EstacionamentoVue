@@ -49,9 +49,9 @@ component: () => import(/* webpackChunkName: "about" */ '../views/entrada/ListaE
         component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CadastroCondutores.vue')
        },
        {
-         path: '/EntradaCadastro',
-         name: 'EntradaCadastro',
-         component: () => import(/* webpackChunkName: "about" */ '../views/entrada/CadastroEntradas.vue')
+         path: '/EntradaFinalizar',
+         name: 'EntradaFinalizar',
+         component: () => import(/* webpackChunkName: "about" */ '../views/entrada/FinalizarEntrada.vue')
         },
         {
           path: '/MarcaCadastro',
