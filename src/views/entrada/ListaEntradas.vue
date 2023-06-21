@@ -29,7 +29,8 @@
           <td class="text-center align-middle">{{ item.condutor }}</td>
           <td class="text-center align-middle">{{ item.horaEntrada }}</td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom"><router-link to="/EntradaFinalizar" class="nav-link">Finalizar</router-link></button>
+            <button type="button" class="btn btn-custom"><router-link to="/EntradaFinalizar" class="btn btn-custom">Finalizar</router-link></button>
+
           </td>
         </tr>
       </tbody>
@@ -72,21 +73,19 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import '../css/Listas.css';
 
 .cadastro-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10vw;
+ 
 }
 
 .cadastro-row input[type="text"] {
   margin-right: 10px;
 }
 
-.cadastro-row button {
-  margin-left: 10px;
-}
+
 </style>

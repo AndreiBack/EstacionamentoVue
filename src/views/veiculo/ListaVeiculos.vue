@@ -18,6 +18,7 @@
           <th scope="col" class="text-center align-middle">Placa</th>
           <th scope="col" class="text-center align-middle"></th>
           <th scope="col" class="text-center align-middle"></th>
+
         </tr>
       </thead>
       <tbody>
@@ -39,10 +40,11 @@
             <button type="button" class="btn btn-custom" @click="editarItem(item)">
               {{ item.editando ? 'Salvar' : 'Editar' }}
             </button>
-          </td>
+          </td>  
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom">Excluir</button>
-          </td>
+              <button type="button" class="btn btn-custom">Excluir</button>
+            </td>
+      
         </tr>
       </tbody>
     </table>
@@ -93,7 +95,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import '../css/Listas.css';
 
 .cadastro-row {

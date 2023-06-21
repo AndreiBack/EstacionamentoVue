@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4" v-for="field in fields" :key="field.id">
+        <div class="col-sm-4 justify-content-center " v-for="field in fields" :key="field.id">
           <div class="form-group">
             <label :for="field.id">{{ field.label }}</label>
             <input :id="field.id" class="form-control" v-model="field.value" />
@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="row">
-        <div class=" d-flex justify-content-center">
+        <div class=" d-flex justify-content-center align-items-center">
         <button class="btn btn-custom" @click="updateSettings">Atualizar</button>
       </div>
       </div>

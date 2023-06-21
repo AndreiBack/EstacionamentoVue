@@ -4,6 +4,8 @@
         <input class="custom-input" type="text" v-model="newItem.nome" placeholder="Nome">
         <input class="custom-input" type="text" v-model="newItem.cpf" placeholder="CPF">
         <input class="custom-input" type="text" v-model="newItem.telefone" placeholder="Telefone">
+        <input class="custom-input" type="text" v-model="newItem.desconto" placeholder="Desconto acumulado">
+        <input class="custom-input" type="text" v-model="newItem.tempoPago" placeholder="Tempo pago">
         <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button>
       </div>
       <table class="table table-dark">
@@ -13,8 +15,10 @@
             <th scope="col" class="text-center align-middle">Nome</th>
             <th scope="col" class="text-center align-middle">CPF</th>
             <th scope="col" class="text-center align-middle">Telefone</th>
-            <th scope="col" class="text-center align-middle"></th>
-            <th scope="col" class="text-center align-middle"></th>
+            <th scope="col" class="text-center align-middle">Desconto Acumulado</th>
+            <th scope="col" class="text-center align-middle">Tempo pago </th>
+            <th scope="col" class="text-center align-middle"> </th>
+            <th scope="col" class="text-center align-middle"> </th>
             
           </tr>
         </thead>
@@ -33,11 +37,21 @@
             <td class="text-center align-middle" v-else>
               <input class="custom-input" type="text" v-model="item.telefone">
             </td>
-            <td class="text-center align-middle"></td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.desconto }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.desconto">
+            </td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.tempoPago }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.tempoPago">
+            </td>
             <td class="text-center align-middle">
               <button type="button" class="btn btn-custom" @click="editarItem(item)">
                 {{ item.editando ? 'Salvar' : 'Editar' }}
               </button>
+            </td>
+            <td class="text-center align-middle">
+              <button type="button" class="btn btn-custom">Excluir</button>
             </td>
           </tr>
         </tbody>
@@ -50,14 +64,16 @@
     data() {
       return {
         items: [
-          { id: 1, nome: 'Andrei', cpf: '141.757.390-25', telefone: '(44) 2616-6481', editando: false },
-          { id: 2, nome: 'Vanderlei', cpf: '064.678.825-63', telefone: '(35) 2033-6317', editando: false },
-          { id: 3, nome: 'O Brabo', cpf: '587.753.180-83', telefone: '(67) 2838-6831', editando: false }
+          { id: 1, nome: 'Andrei', cpf: '141.757.390-25', telefone: '(44) 2616-6481', tempoPago:'50:25', desconto:'05:00', editando: false },
+          { id: 2, nome: 'Vanderlei', cpf: '064.678.825-63', telefone: '(35) 2033-6317', tempoPago:'20:00', desconto:'00:00', editando: false },
+          { id: 3, nome: 'O Brabo', cpf: '587.753.180-83', telefone: '(67) 2838-6831', tempoPago:'120:50', desconto:'10:00', editando: false }
         ],
         newItem: {
           nome: '',
           cpf: '',
-          telefone: ''
+          telefone: '',
+          tempoPago: '',
+          desconto: '',
         }
       };
     },

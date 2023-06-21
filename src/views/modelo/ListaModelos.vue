@@ -38,8 +38,9 @@
               </button>
             </td>
             <td class="text-center align-middle">
-              <button type="button" class="btn btn-custom">Opções</button>
+              <button type="button" class="btn btn-custom">Excluir</button>
             </td>
+          
           </tr>
         </tbody>
       </table>
@@ -88,7 +89,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   @import '../css/Listas.css';
   
   .custom-input {

@@ -11,7 +11,7 @@
             <th scope="col" class="text-center align-middle">Marca</th>
             <th scope="col" class="text-center align-middle"></th>
             <th scope="col" class="text-center align-middle"></th>
-            <th scope="col" class="text-center align-middle"></th>
+           
           </tr>
         </thead>
         <tbody>
@@ -26,10 +26,10 @@
                 {{ item.editando ? 'Salvar' : 'Editar' }}
               </button>
             </td>
-            <td class="text-center align-middle"></td>
             <td class="text-center align-middle">
-              <button type="button" class="btn btn-custom">Opções</button>
+              <button type="button" class="btn btn-custom">Excluir</button>
             </td>
+
           </tr>
         </tbody>
       </table>
@@ -74,7 +74,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   @import '../css/Listas.css';
   
   .cadastro-row {

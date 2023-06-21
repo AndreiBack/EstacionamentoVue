@@ -1,7 +1,8 @@
 <template>
-    <div class="container d-flex " style="height: 100vh; background-color: black;">
+    <div class="container  " style=" background-color: black;">
       <div class="card text-white" style="background-color: #400F3B;">
         <div class="card-body">
+          <h5 class="card-title">Finalizar</h5>
           <h5 class="card-title">Nota Fiscal</h5>
           <div class="form-group">
             <label>Data e Hora:</label>
