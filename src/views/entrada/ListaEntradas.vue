@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="cadastro-row dark">
-      <select class="custom-input" v-model="newItem.placa">
-        <option value="">Selecione a Placa</option>
-        <option v-for="item in items" :value="item.placa" :key="item.id">{{ item.placa }}</option>
+      <select class="custom-input" v-model="newItem.veiculo">
+        <option value="">Selecione o Veiculo</option>
+        <option v-for="item in MovimentacaoList" :value="item.veiculo" :key="item.id">{{ item.veiculo }}</option>
       </select>
       <select class="custom-input" v-model="newItem.condutor">
         <option value="">Selecione o Condutor</option>
-        <option v-for="item in items" :value="item.condutor" :key="item.id">{{ item.condutor }}</option>
+        <option v-for="item in MovimentacaoList" :value="item.condutor" :key="item.id">{{ item.condutor }}</option>
       </select>
-      <input class="custom-input" type="text" v-model="newItem.horaEntrada" placeholder="Hora de Entrada">
+      <input class="custom-input" type="text" v-model="newItem.entrada" placeholder="Hora de Entrada">
       <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button>
     </div>
     <table class="table table-dark">
@@ -23,14 +23,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items" :key="item.id">
+        <tr v-for="item in MovimentacaoList" :key="item.id">
           <th scope="row" class="text-center align-middle">{{ item.id }}</th>
-          <td class="text-center align-middle">{{ item.placa }}</td>
+          <td class="text-center align-middle">{{ item.veiculo }}</td>
           <td class="text-center align-middle">{{ item.condutor }}</td>
-          <td class="text-center align-middle">{{ item.horaEntrada }}</td>
+          <td class="text-center align-middle">{{ item.entrada }}</td>
           <td class="text-center align-middle">
             <button type="button" class="btn btn-custom"><router-link to="/EntradaFinalizar" class="btn btn-custom">Finalizar</router-link></button>
-
           </td>
         </tr>
       </tbody>
@@ -38,38 +37,66 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ref, onMounted } from 'vue';
+import { MovimentacaoClient } from '@/client/MovimentacaoClient';
+import { MovimentacaoModel } from '@/model/MovimentacaoModel';
+
 export default {
-  data() {
-    return {
-      items: [
-        { id: 1, placa: 'BRA2E19', condutor: 'Ben', horaEntrada: '10:10' },
-        { id: 2, placa: 'URI9V58', condutor: 'Fred', horaEntrada: '19:30' },
-        { id: 3, placa: 'IUE1R89', condutor: 'Cleitin', horaEntrada: '12:55' }
-      ],
-      newItem: {
-        placa: '',
-        condutor: '',
-      }
+  setup() {
+    const MovimentacaoList = ref<MovimentacaoModel[]>([]);
+    const newItem = ref({
+      veiculo: '',
+      condutor: '',
+      entrada: '',
+    });
+
+    const cadastrarItem = () => {
+  const { veiculo, condutor, entrada } = newItem.value;
+
+  // Convert the entrada string to a Date object
+  const entradaDate = new Date(entrada);
+
+  // Create a new instance of MovimentacaoModel
+  const movimentacao = new MovimentacaoModel();
+  movimentacao.veiculo.placa =  veiculo ;
+  movimentacao.condutor.cpf =  condutor ; 
+  movimentacao.entrada = entradaDate; 
+
+  
+  const movimentacaoClient = new MovimentacaoClient();
+  movimentacaoClient.cadastrar(movimentacao)
+    .then(() => {
+      // Item saved successfully, do any additional logic here if needed
+      console.log('Item saved successfully');
+    })
+    .catch((error: any) => {
+      // Handle the error if saving fails
+      console.error(error);
+    });
+};
+
+
+    const findAll = () => {
+      const client = new MovimentacaoClient();
+      client.listar()
+        .then((data: MovimentacaoModel[]) => {
+          MovimentacaoList.value = data;
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
     };
+
+    onMounted(findAll);
+
+    return {
+      MovimentacaoList,
+      newItem,
+      cadastrarItem,
+    };
+    
   },
-  methods: {
-    cadastrarItem() {
-      const newItem = {
-        id: this.items.length + 1,
-        placa: this.newItem.placa,
-        condutor: this.newItem.condutor,
-        horaEntrada: this.newItem.horaEntrada
-      };
-      this.items.push(newItem);
-      this.resetForm();
-    },
-    resetForm() {
-      this.newItem.placa = '';
-      this.newItem.condutor = '';
-      this.newItem.horaEntrada = '';
-    }
-  }
 };
 </script>
 
@@ -80,12 +107,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
- 
 }
 
 .cadastro-row input[type="text"] {
   margin-right: 10px;
 }
-
-
 </style>
