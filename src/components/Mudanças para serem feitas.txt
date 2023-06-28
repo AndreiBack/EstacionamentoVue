@@ -1,3 +1,370 @@
-Tirar as telas de cadastro de uma tela propria e deixa-las em suas respectivas listas, após clicar no botao + deverá ficar visivel o cadastro de itens acima da lista, isso facilitará o cadastro e ficara mais simples e bonito.
-nos botões de opções, trocar por um botao de editar e um deletar(com simbolo de lixeira) que vai abrir logo abaixo do item da lista desejada para mudar as informações dela.
-Ainda tenho que fazer a tela de Finalizar nas entradas, esta pode ser feita em uma pagina separada.
+<template>
+    <div>
+      <div class="cadastro-row">
+        <input class="custom-input" type="text" v-model="newItem.nome" placeholder="Nome">
+        <input class="custom-input" type="text" v-model="newItem.cpf" placeholder="CPF">
+        <input class="custom-input" type="text" v-model="newItem.telefone" placeholder="Telefone">
+        <input class="custom-input" type="text" v-model="newItem.desconto" placeholder="Desconto acumulado">
+        <input class="custom-input" type="text" v-model="newItem.tempoPago" placeholder="Tempo pago">
+        <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button>
+      </div>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center align-middle">id</th>
+            <th scope="col" class="text-center align-middle">Nome</th>
+            <th scope="col" class="text-center align-middle">CPF</th>
+            <th scope="col" class="text-center align-middle">Telefone</th>
+            <th scope="col" class="text-center align-middle">Desconto Acumulado</th>
+            <th scope="col" class="text-center align-middle">Tempo pago </th>
+            <th scope="col" class="text-center align-middle"> </th>
+            <th scope="col" class="text-center align-middle"> </th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in items" :key="item.id">
+            <th scope="row" class="text-center align-middle">{{ item.id }}</th>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.nome }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.nome">
+            </td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.cpf }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.cpf">
+            </td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.telefone }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.telefone">
+            </td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.desconto }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.desconto">
+            </td>
+            <td class="text-center align-middle" v-if="!item.editando">{{ item.tempoPago }}</td>
+            <td class="text-center align-middle" v-else>
+              <input class="custom-input" type="text" v-model="item.tempoPago">
+            </td>
+            <td class="text-center align-middle">
+              <button type="button" class="btn btn-custom" @click="editarItem(item)">
+                {{ item.editando ? 'Salvar' : 'Editar' }}
+              </button>
+            </td>
+            <td class="text-center align-middle">
+              <button type="button" class="btn btn-custom">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        items: [
+          { id: 1, nome: 'Andrei', cpf: '141.757.390-25', telefone: '(44) 2616-6481', tempoPago:'50:25', desconto:'05:00', editando: false },
+          { id: 2, nome: 'Vanderlei', cpf: '064.678.825-63', telefone: '(35) 2033-6317', tempoPago:'20:00', desconto:'00:00', editando: false },
+          { id: 3, nome: 'O Brabo', cpf: '587.753.180-83', telefone: '(67) 2838-6831', tempoPago:'120:50', desconto:'10:00', editando: false }
+        ],
+        newItem: {
+          nome: '',
+          cpf: '',
+          telefone: '',
+          tempoPago: '',
+          desconto: '',
+        }
+      };
+    },
+    methods: {
+      cadastrarItem() {
+        const newItem = {
+          id: this.items.length + 1,
+          nome: this.newItem.nome,
+          cpf: this.newItem.cpf,
+          telefone: this.newItem.telefone,
+          editando: false
+        };
+        this.items.push(newItem);
+        this.resetForm();
+      },
+      resetForm() {
+        this.newItem.nome = '';
+        this.newItem.cpf = '';
+        this.newItem.telefone = '';
+      },
+      editarItem(item) {
+        if (item.editando) {
+          item.editando = false;
+          // Here you can add the logic to save the changes
+        } else {
+          item.editando = true;
+        }
+      }
+    }
+  };
+  </script>
+ Faça com fetch e json stringfy a função para o botao cadastrar deste trecho do codigo
+ <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button> 
+       realize o cadastro da marca e do modelo colocado no input, alem disso faça a adição de todas as funções do script do codigo que te passarei depois, como listarItems(vai substituir o metodo atual de usar array para preencher as tabelas), toggleEdicao e tal.
+        esta é minha controller: 
+
+@Controller
+@RequestMapping(value = "/api/condutor")
+public class CondutorController {
+
+    @Autowired
+    private  CondutorService condutorService;
+    @Autowired
+    private CondutorRepository condutorRepository;
+
+    @GetMapping("/lista")
+    public ResponseEntity<?> findAll() {
+        List<Condutor> condutores = this.condutorRepository.findAll();
+        return ResponseEntity.ok(condutores);
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<?> findByAtivo(){
+        List<Condutor> condutores = this.condutorRepository.findByAtivoTrue();
+
+        return ResponseEntity.ok(condutores);
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<?> findByCpf(@PathVariable("cpf") final String cpf){
+        final Optional <Condutor> condutor = this.condutorRepository.findByCpf(cpf);
+
+        return condutor == null
+                ? ResponseEntity.badRequest().body("Condutor não encontrado")
+                : ResponseEntity.ok(condutor);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> newCondutor(@RequestBody final Condutor condutor){
+        try{
+            this.condutorService.newCondutor(condutor);
+            return ResponseEntity.ok("Registro cadastrado com sucesso");
+        } catch (DataIntegrityViolationException  e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") final Long id, @RequestBody final Condutor condutor){
+        try{
+            final Condutor verificacao = this.condutorRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Não foi possível identificar o registro informado"));
+            this.condutorService.update(condutor);
+            return ResponseEntity.ok("Registro editado com sucesso");
+
+        } catch (DataIntegrityViolationException  e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable final Long id) {
+        try {
+            this.condutorService.delete(id);
+            return ResponseEntity.ok("Condutor excluído com sucesso");
+        }  catch (DataIntegrityViolationException  e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
+}
+
+
+e essa minha entity
+  
+@Entity
+@Table(name = "condutores", schema = "public")
+public class    Condutor extends AbstractEntity{
+
+
+    @Getter @Setter
+    @Column(name = "nome", nullable = false, length = 100)
+    private String nome;
+
+    @Getter @Setter
+    @Column(name = "cpf", nullable = false, unique = true, length = 20)
+    private String cpf;
+
+    @Getter @Setter
+    @Column(name = "telefone", nullable = false, length = 20)
+    private String telefone;
+
+
+    @Getter @Setter
+    @Column(name = "tempo_Pago")
+    private Long tempoPago = 0L;
+    @Getter @Setter
+    @Column(name = "tempo_desconto")
+    private Long tempoDesconto = 0L;
+
+
+}
+Quero que o <script> do codigo seja feito com typescript e que seja totalmente alterado para algo adaptado para este.
+ Pode usar como exemplo para aplicar isto, este  meu codigo que esta castrando corretamente do jeito que quero(este codigo que vou te mandar é o que voce deve se basear principalmente, tambem faça a função toggleEdicao para funcionar da mesma forma mas adaptada para o condutor, e o de deletar>
+  <div>
+    <div class="cadastro-row">
+      <input class="custom-input" type="text" v-model="newItem.marca" placeholder="Marca">
+      <button type="button" class="btn btn-custom"  @click="cadastrarMarca" >Cadastrar</button>
+    </div>
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center align-middle">id</th>
+          <th scope="col" class="text-center align-middle">Marca</th>
+          <th scope="col" class="text-center align-middle"></th>
+          <th scope="col" class="text-center align-middle"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in items" :key="item.id">
+          <th scope="row" class="text-center align-middle">{{ item.id }}</th>
+          <td class="text-center align-middle">
+            <template v-if="item.editando">
+              <input class="custom-input" type="text" v-model="item.nome">
+            </template>
+            <template v-else>
+              {{ item.nome }}
+            </template>
+          </td>
+          <td></td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-none" @click="toggleEdicao(index)">
+              {{ item.editando ? '✅' : '📝' }}
+            </button>
+            <button type="button" class="btn btn-none" @click="deletarMarca(index)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref } from 'vue';
+import { MarcaClient } from '@/client/MarcaClient';
+import { MarcaModel } from '@/model/MarcaModel';
+
+export default {
+  setup() {
+    const marcaClient = new MarcaClient();
+
+    const items = ref<MarcaModel[]>([]);
+
+    const newItem = ref({
+      marca: ''
+    });
+
+    const listarItems = async () => {
+      try {
+        items.value = await marcaClient.listar();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const cadastrarMarca = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/api/marca', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            nome: newItem.value.marca
+          })
+        });
+
+        if (response.ok) {
+          console.log('Marca cadastrada com sucesso');
+          resetForm();
+          listarItems();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
+      } catch (error) {
+        console.error('Erro ao cadastrar a marca:', error);
+      }
+    };
+
+
+    const toggleEdicao = async (index: number) => {
+  const marca = items.value[index];
+  marca.editando = !marca.editando; 
+
+  if (!marca.editando) { 
+    try {
+      const response = await fetch(`http://localhost:9000/api/marca/${marca.id}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+          nome: marca.nome,
+          ativo: false
+        })
+      });
+
+      if (response.ok) {
+        console.log('Marca atualizada com sucesso');
+        listarItems();
+      } else {
+        const errorMessage = await response.text();
+        console.error(errorMessage);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar a marca:', error);
+    }
+  }
+};
+const deletarMarca = async (index: number) => {
+  const marca = items.value[index];
+
+  try {
+    const response = await fetch(`http://localhost:9000/api/marca/${marca.id}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      console.log('Marca deletada com sucesso');
+      listarItems();
+    } else {
+      const errorMessage = await response.text();
+      console.error(errorMessage);
+    }
+  } catch (error) {
+    console.error('Erro ao deletar a marca:', error);
+  }
+};
+    const resetForm = () => {
+      newItem.value.marca = '';
+    };
+
+    listarItems();
+
+    return {
+      items,
+      newItem,
+      toggleEdicao,
+      cadastrarMarca,
+      deletarMarca
+    };
+  }
+};
+</script>
+

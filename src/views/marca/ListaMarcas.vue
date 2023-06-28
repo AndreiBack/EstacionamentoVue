@@ -100,7 +100,6 @@ export default {
         },
         method: 'PUT',
         body: JSON.stringify({
-          nome: marca.nome,
           ativo: false
         })
       });

@@ -1,122 +1,220 @@
 <template>
-    <div>
-      <div class="cadastro-row">
-        <select class="custom-input" v-model="newItem.marca">
-          <option value="">Selecione a Marca</option>
-          <option v-for="marca in marcas" :value="marca" :key="marca">{{ marca }}</option>
-        </select>
-        <input class="custom-input" type="text" v-model="newItem.modelo" placeholder="Modelo">
-        <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button>
-      </div>
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col" class="text-center align-middle">id</th>
-            <th scope="col" class="text-center align-middle">Marca</th>
-            <th scope="col" class="text-center align-middle">Modelo</th>
-            <th scope="col" class="text-center align-middle"></th>
-            <th scope="col" class="text-center align-middle"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in items" :key="item.id">
-            <th scope="row" class="text-center align-middle">{{ item.id }}</th>
-            <td class="text-center align-middle" v-if="!item.editando">{{ item.marca }}</td>
-            <td class="text-center align-middle" v-else>
-              <select class="custom-input" v-model="item.marca">
-                <option value="">Selecione a Marca</option>
-                <option v-for="marca in marcas" :value="marca" :key="marca">{{ marca }}</option>
-              </select>
-            </td>
-            <td class="text-center align-middle" v-if="!item.editando">{{ item.modelo }}</td>
-            <td class="text-center align-middle" v-else>
-              <input type="text" class="custom-input" v-model="item.modelo">
-            </td>
-            <td class="text-center align-middle">
-              <button type="button" class="btn btn-custom" @click="editarItem(item)">
-                {{ item.editando ? 'Salvar' : 'Editar' }}
-              </button>
-            </td>
-            <td class="text-center align-middle">
-              <button type="button" class="btn btn-custom">Excluir</button>
-            </td>
-          
-          </tr>
-        </tbody>
-      </table>
+  <div>
+    <div class="cadastro-row">
+      <select class="custom-input" v-model="newItem.marca">
+        <option value="">Selecione a Marca</option>
+        <option v-for="marca in marcas" :value="marca" :key="marca">{{ marca }}</option>
+      </select>
+      <input class="custom-input" type="text" v-model="newItem.modelo" placeholder="Modelo">
+      <button type="button" class="btn btn-custom" @click="cadastrarModelo">Cadastrar</button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        items: [
-          { id: 1, marca: 'Ford', modelo: 'Ranger', editando: false },
-          { id: 2, marca: 'Wolkswagen', modelo: 'Gol', editando: false },
-          { id: 3, marca: 'Omnitrix', modelo: 'Camaro', editando: false }
-        ],
-        newItem: {
-          marca: '',
-          modelo: ''
-        },
-        marcas: ['Ford 1', 'Wolkswagen 2', 'Omnitrix 3'] // Substitua pela sua própria lista de marcas
-      };
-    },
-    methods: {
-      cadastrarItem() {
-        const newItem = {
-          id: this.items.length + 1,
-          marca: this.newItem.marca,
-          modelo: this.newItem.modelo,
-          editando: false
-        };
-        this.items.push(newItem);
-        this.resetForm();
-      },
-      resetForm() {
-        this.newItem.marca = '';
-        this.newItem.modelo = '';
-      },
-      editarItem(item) {
-        if (item.editando) {
-          // Salvar as alterações
-          // Aqui você pode realizar alguma ação, como enviar as alterações para o servidor
-        }
-        item.editando = !item.editando;
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center align-middle">id</th>
+          <th scope="col" class="text-center align-middle">Marca</th>
+          <th scope="col" class="text-center align-middle">Modelo</th>
+          <th scope="col" class="text-center align-middle"></th>
+          <th scope="col" class="text-center align-middle"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in items" :key="item.id">
+          <th scope="row" class="text-center align-middle">{{ item.id }}</th>
+          <td class="text-center align-middle" v-if="!item.editando">{{ item.marcaId.nome }}</td>
+          <td class="text-center align-middle" v-else>
+            <select class="custom-input" v-model="item.marcaId.nome">
+              <option value="">Selecione a Marca</option>
+              <option v-for="marca in marcas" :value="marca" :key="marca">{{ marca }}</option>
+            </select>
+          </td>
+          <td class="text-center align-middle" v-if="!item.editando">{{ item.modelo }}</td>
+          <td class="text-center align-middle" v-else>
+            <input type="text" class="custom-input" v-model="item.modelo">
+          </td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-custom" @click="toggleEdicao(index)">
+              {{ item.editando ? 'Salvar' : 'Editar' }}
+            </button>
+          </td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-custom" @click="deletarModelo(index)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref, onMounted } from 'vue';
+import { ModeloClient } from '@/client/ModeloClient';
+import { ModeloModel } from '@/model/ModeloModel';
+
+export default {
+  setup() {
+    const modeloClient = new ModeloClient();
+
+    const items = ref<ModeloModel[]>([]);
+    const marcas = ref<string[]>([]);
+    const newItem = ref({
+      marca: '',
+      modelo: ''
+    });
+
+    const listarItems = async () => {
+      try {
+        items.value = await modeloClient.listar();
+      } catch (error) {
+        console.error('Error while fetching items:', error);
       }
-    }
-  };
-  </script>
-  
-  <style scoped>
-  @import '../css/Listas.css';
-  
-  .custom-input {
-    width: 10vw;
-    background-color: black;
-    border: 2px solid #400F3B;
-    color: white;
-    margin-right: 1vw;
+    };
+
+    const listarMarcas = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/api/marca/lista');
+        if (response.ok) {
+          marcas.value = await response.json();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const cadastrarModelo = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/api/modelo', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            marcaId: { nome: newItem.value.marca },
+            modelo: newItem.value.modelo
+          })
+        });
+
+        if (response.ok) {
+          console.log('Modelo cadastrado com sucesso');
+          resetForm();
+          listarItems();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
+      } catch (error) {
+        console.error('Erro ao cadastrar o modelo:', error);
+      }
+    };
+
+    const toggleEdicao = (index: number) => {
+      const item = items.value[index];
+      item.editando = !item.editando;
+      if (!item.editando) {
+        // Save changes
+        salvarEdicao(item).catch(error => console.error('Error while saving changes:', error));
+      }
+    };
+
+    const salvarEdicao = async (item: ModeloModel) => {
+      try {
+        const response = await fetch(`http://localhost:9000/api/modelo/${item.id}`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'PUT',
+          body: JSON.stringify({
+            marca: item.marcaId.nome,
+            modelo: item.modelo
+          })
+        });
+
+        if (response.ok) {
+          console.log('Edição salva com sucesso');
+          listarItems();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
+      } catch (error) {
+        console.error('Erro ao salvar a edição:', error);
+      }
+    };
+
+    const deletarModelo = async (index: number) => {
+      const item = items.value[index];
+      try {
+        const response = await fetch(`http://localhost:9000/api/modelo/${item.id}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          console.log('Modelo excluído com sucesso');
+          listarItems();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
+      } catch (error) {
+        console.error('Erro ao excluir o modelo:', error);
+      }
+    };
+
+    const resetForm = () => {
+      newItem.value.marca = '';
+      newItem.value.modelo = '';
+    };
+
+    onMounted(() => {
+      listarItems().catch(error => console.error('Error in onMounted:', error));
+      listarMarcas().catch(error => console.error('Error in onMounted:', error));
+    });
+
+    return {
+      items,
+      marcas,
+      newItem,
+      toggleEdicao,
+      cadastrarModelo,
+      deletarModelo
+    };
   }
-  
-  .cadastro-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    justify-content: center;
-  }
-  
-  .cadastro-row select {
-    margin-right: 10px;
-  }
-  
-  .cadastro-row input[type="text"] {
-    margin-right: 10px;
-  }
-  
-  .cadastro-row button {
-    margin-left: 10px;
-  }
-  </style>
-  
+};
+</script>
+
+
+<style scoped>
+@import '../css/Listas.css';
+
+.custom-input {
+  width: 10vw;
+  background-color: black;
+  border: 2px solid #400F3B;
+  color: white;
+  margin-right: 1vw;
+}
+
+.cadastro-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.cadastro-row select {
+  margin-right: 10px;
+}
+
+.cadastro-row input[type="text"] {
+  margin-right: 10px;
+}
+
+.cadastro-row button {
+  margin-left: 10px;
+}
+</style>

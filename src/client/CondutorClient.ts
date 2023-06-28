@@ -22,7 +22,7 @@ export class CondutorClient {
 
     public async listar(): Promise<CondutorModel[]> {
         try {
-            return (await this.axiosClient.get<CondutorModel[]>('/')).data;
+            return (await this.axiosClient.get<CondutorModel[]>('/lista')).data;
         } catch (error: any) {
             return Promise.reject(error.response);
         }

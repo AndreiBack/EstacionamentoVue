@@ -23,7 +23,7 @@ export class ModeloClient {
     
     public async listar(): Promise<ModeloModel[]> {
         try {
-            return (await this.axiosClient.get<ModeloModel[]>('/')).data;
+            return (await this.axiosClient.get<ModeloModel[]>('/lista')).data;
         } catch (error: any) {
             return Promise.reject(error.response);
         }
