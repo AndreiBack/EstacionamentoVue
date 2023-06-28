@@ -8,9 +8,11 @@ export class MarcaClient {
     constructor() {
         this.axiosClient = axios.create({
             baseURL: 'http://localhost:9000/api/marca',
-            headers: {'Content-type' : 'application/json'}
-        });
+            headers: {'Content-type' : 'application/json'},
+            withCredentials: true
+        });  
     }
+    
 
     public async findById(id: number): Promise<MarcaModel> {
         try {
@@ -21,7 +23,7 @@ export class MarcaClient {
     }
     public async listar(): Promise<MarcaModel[]> {
         try {
-            return (await this.axiosClient.get<MarcaModel[]>('/')).data;
+            return (await this.axiosClient.get<MarcaModel[]>('/lista')).data;
         } catch (error: any) {
             return Promise.reject(error.response);
         }

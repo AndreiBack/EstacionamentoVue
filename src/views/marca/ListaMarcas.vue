@@ -2,7 +2,7 @@
   <div>
     <div class="cadastro-row">
       <input class="custom-input" type="text" v-model="newItem.marca" placeholder="Marca">
-      <button type="button" class="btn btn-custom" @click="cadastrarItem">Cadastrar</button>
+      <button type="button" class="btn btn-custom"  @click="cadastrarMarca" >Cadastrar</button>
     </div>
     <table class="table table-dark">
       <thead>
@@ -29,7 +29,7 @@
             <button type="button" class="btn btn-none" @click="toggleEdicao(index)">
               {{ item.editando ? '✅' : '📝' }}
             </button>
-            <button type="button" class="btn btn-none">🗑️</button>
+            <button type="button" class="btn btn-none" @click="deletarMarca(index)">🗑️</button>
           </td>
         </tr>
       </tbody>
@@ -60,23 +60,82 @@ export default {
       }
     };
 
-    const cadastrarItem = async () => {
-      const { marca } = newItem.value;
-      const newMarca = new MarcaModel();
-      newMarca.nome = marca;
+    const cadastrarMarca = async () => {
       try {
-        await marcaClient.cadastrar(newMarca);
-        await listarItems();
-        resetForm();
+        const response = await fetch('http://localhost:9000/api/marca', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            nome: newItem.value.marca
+          })
+        });
+
+        if (response.ok) {
+          console.log('Marca cadastrada com sucesso');
+          resetForm();
+          listarItems();
+        } else {
+          const errorMessage = await response.text();
+          console.error(errorMessage);
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Erro ao cadastrar a marca:', error);
       }
     };
 
-    const toggleEdicao = (index: number) => {
-      items.value[index].editando = !items.value[index].editando;
-    };
 
+    const toggleEdicao = async (index: number) => {
+  const marca = items.value[index];
+  marca.editando = !marca.editando; 
+
+  if (!marca.editando) { 
+    try {
+      const response = await fetch(`http://localhost:9000/api/marca/${marca.id}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+          nome: marca.nome,
+          ativo: false
+        })
+      });
+
+      if (response.ok) {
+        console.log('Marca atualizada com sucesso');
+        listarItems();
+      } else {
+        const errorMessage = await response.text();
+        console.error(errorMessage);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar a marca:', error);
+    }
+  }
+};
+const deletarMarca = async (index: number) => {
+  const marca = items.value[index];
+
+  try {
+    const response = await fetch(`http://localhost:9000/api/marca/${marca.id}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      console.log('Marca deletada com sucesso');
+      listarItems();
+    } else {
+      const errorMessage = await response.text();
+      console.error(errorMessage);
+    }
+  } catch (error) {
+    console.error('Erro ao deletar a marca:', error);
+  }
+};
     const resetForm = () => {
       newItem.value.marca = '';
     };
@@ -86,8 +145,9 @@ export default {
     return {
       items,
       newItem,
-      cadastrarItem,
-      toggleEdicao
+      toggleEdicao,
+      cadastrarMarca,
+      deletarMarca
     };
   }
 };
