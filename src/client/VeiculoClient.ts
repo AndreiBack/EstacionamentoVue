@@ -23,7 +23,7 @@ export class VeiculoClient {
 
     public async listar(): Promise<VeiculoModel[]> {
         try {
-            return (await this.axiosClient.get<VeiculoModel[]>('/')).data;
+            return (await this.axiosClient.get<VeiculoModel[]>('/lista')).data;
         } catch (error: any) {
             return Promise.reject(error.response);
         }

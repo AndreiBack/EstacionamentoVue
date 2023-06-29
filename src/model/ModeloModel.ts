@@ -2,7 +2,7 @@ import { AbstractEntity } from "./AbstractEntity";
 import { MarcaModel } from "./MarcaModel";
 
 export class ModeloModel extends AbstractEntity{
-    modelo! : string
+    nome! : string
     marcaId! : MarcaModel
     
     constructor() {

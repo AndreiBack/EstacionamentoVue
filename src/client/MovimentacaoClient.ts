@@ -23,7 +23,7 @@ export class MovimentacaoClient {
 
     public async listar(): Promise<MovimentacaoModel[]> {
         try {
-            return (await this.axiosClient.get<MovimentacaoModel[]>('/')).data;
+            return (await this.axiosClient.get<MovimentacaoModel[]>('/lista')).data;
         } catch (error: any) {
             return Promise.reject(error.response);
         }

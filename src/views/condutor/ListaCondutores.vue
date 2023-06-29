@@ -33,12 +33,12 @@
             <input class="custom-input" type="text" v-model="item.telefone">
           </td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom" @click="toggleEdicao(index)">
-              {{ item.editando ? 'Salvar' : 'Editar' }}
+            <button type="button" class="btn btn-none" @click="toggleEdicao(index)">
+              {{ item.editando ? '✅' : '📝' }}
             </button>
           </td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom" @click="deletarCondutor(index)">Excluir</button>
+            <button type="button" class="btn btn-none" @click="deletarCondutor(index)">🗑️</button>
           </td>
         </tr>
       </tbody>

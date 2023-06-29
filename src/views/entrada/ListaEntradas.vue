@@ -25,8 +25,8 @@
       <tbody>
         <tr v-for="item in MovimentacaoList" :key="item.id">
           <th scope="row" class="text-center align-middle">{{ item.id }}</th>
-          <td class="text-center align-middle">{{ item.veiculo }}</td>
-          <td class="text-center align-middle">{{ item.condutor }}</td>
+          <td class="text-center align-middle">{{ item.veiculo.placa }}</td>
+          <td class="text-center align-middle">{{ item.condutor.nome }}</td>
           <td class="text-center align-middle">{{ item.entrada }}</td>
           <td class="text-center align-middle">
             <button type="button" class="btn btn-custom"><router-link to="/EntradaFinalizar" class="btn btn-custom">Finalizar</router-link></button>

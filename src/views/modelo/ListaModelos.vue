@@ -28,17 +28,17 @@
               <option v-for="marca in marcas" :value="marca" :key="marca">{{ marca }}</option>
             </select>
           </td>
-          <td class="text-center align-middle" v-if="!item.editando">{{ item.modelo }}</td>
+          <td class="text-center align-middle" v-if="!item.editando">{{ item.nome }}</td>
           <td class="text-center align-middle" v-else>
-            <input type="text" class="custom-input" v-model="item.modelo">
+            <input type="text" class="custom-input" v-model="item.nome">
           </td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom" @click="toggleEdicao(index)">
-              {{ item.editando ? 'Salvar' : 'Editar' }}
+            <button type="button" class="btn btn-none" @click="toggleEdicao(index)">
+              {{ item.editando ? '✅' : '📝' }}
             </button>
           </td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-custom" @click="deletarModelo(index)">Excluir</button>
+            <button type="button" class="btn btn-none" @click="deletarModelo(index)">🗑️</button>
           </td>
         </tr>
       </tbody>
@@ -129,8 +129,8 @@ export default {
           },
           method: 'PUT',
           body: JSON.stringify({
-            marca: item.marcaId.nome,
-            modelo: item.modelo
+            marcaId: item.marcaId.nome,
+            modelo: item.nome
           })
         });
 

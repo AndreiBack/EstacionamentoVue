@@ -1,7 +1,7 @@
+import { ConfiguracaoModel } from "@/model/ConfiguracaoModel";
 import axios, { AxiosInstance } from "axios";
-import { ConfiguracaoModel } from "../model/ConfiguracaoModel";
 
-export class ConfiguracaoClient {
+export class ConfiguracaoClient{
 
     private axiosClient: AxiosInstance;
 
@@ -12,29 +12,52 @@ export class ConfiguracaoClient {
         });
     }
 
-    public async listar(): Promise<ConfiguracaoModel[]> {
+    public async findById(id: number) : Promise<ConfiguracaoModel> {
         try {
-            return (await this.axiosClient.get<ConfiguracaoModel[]>('/')).data;
+            return (await this.axiosClient.get<ConfiguracaoModel>(`/${id}`)).data
+        } catch (error:any) {
+            return Promise.reject(error.response);
+        }
+    }
+
+    public async findAll(): Promise<ConfiguracaoModel[]> {
+        try {
+            return (await this.axiosClient.get<ConfiguracaoModel[]>(`/lista`)).data
+        } catch (error:any) {
+            return Promise.reject(error.response)
+        }
+    }
+    public async ativos(): Promise<ConfiguracaoModel[]>{
+        try {
+            return( await this.axiosClient.get<ConfiguracaoModel[]>('/ativos')).data
+        } catch (error:any){
+            return Promise.reject(error.response);
+        }
+    }
+
+ 
+
+    public async newConfiguracao(ConfiguracaoModel: ConfiguracaoModel): Promise<void> {
+        try {
+            return (await this.axiosClient.post('', ConfiguracaoModel));
         } catch (error: any) {
             return Promise.reject(error.response);
         }
     }
 
-    public async cadastrar(configuracao: ConfiguracaoModel): Promise<void> {
+    public async upDate(id: number, configuracaoModel: ConfiguracaoModel): Promise<void> {
         try {
-            return (await this.axiosClient.post('/', configuracao));
+          return (await this.axiosClient.put(`/${id}`, configuracaoModel)).data;
         } catch (error: any) {
-            return Promise.reject(error.response);
+          return Promise.reject(error.response);
+        }
+      }
+
+    public async excluir(id: number): Promise<string> {
+        try {
+            return (await this.axiosClient.delete<string>(`/${id}`)).data
+        } catch (error:any) {
+            return Promise.reject(error.response)
         }
     }
-
-    public async editar(configuracao: ConfiguracaoModel): Promise<void> {
-        try {
-            return (await this.axiosClient.put(`/${configuracao.id}`, configuracao)).data;
-        } catch (error: any) {
-            return Promise.reject(error.response);
-        }
-    }
-
-
 }
